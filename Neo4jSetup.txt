@@ -1,0 +1,11 @@
+docker run -d `
+  --name neo4j-medgraph `
+  -p 7474:7474 `
+  -p 7687:7687 `
+  -v Z:/neo/data:/data `
+  -v Z:/neo/logs:/logs `
+  -e NEO4J_AUTH=neo4j/qwerty123 `
+  -e NEO4J_PLUGINS='["apoc", "graph-data-science"]' `
+  -e NEO4J_dbms_security_procedures_allowlist=apoc.*,gds.* `
+  -e NEO4J_dbms_security_procedures_unrestricted=apoc.*,gds.* `
+  neo4j:latest

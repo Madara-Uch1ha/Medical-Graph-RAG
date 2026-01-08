@@ -1,7 +1,4 @@
-*.txt
-dataset
-dataset_paper
-dataset_test
+
 test*
 .dockerignore
 app.sh
@@ -15,3 +12,7 @@ __pycache__
 
 # ignore special files or folds
 .DS_Store
+
+.env
+/dataset/mimic_ex
+/dataset_test

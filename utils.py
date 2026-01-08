@@ -18,7 +18,7 @@ Modify the response to the question using the provided references. Include preci
 # Add your own OpenAI API key
 openai_api_key = os.getenv("OPENAI_API_KEY")
 
-def get_embedding(text, mod = "text-embedding-3-small"):
+def get_embedding(text, mod = "text-embedding-3-large"):
     client = OpenAI(
         api_key=os.getenv("OPENAI_API_KEY"),
         base_url=os.getenv("OPENAI_API_BASE_URL")
@@ -88,7 +88,7 @@ def call_llm(sys, user):
         base_url=os.getenv("OPENAI_API_BASE_URL")
     )
     response = client.chat.completions.create(
-        model="gpt-4-1106-preview",
+        model="gpt-5-nano-2025-08-07",
         messages=[
             {"role": "system", "content": sys},
             {"role": "user", "content": f" {user}"},

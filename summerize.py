@@ -38,7 +38,7 @@ def call_openai_api(chunk):
         base_url=os.getenv("OPENAI_API_BASE_URL")
     )
     response = client.chat.completions.create(
-        model="gpt-4-1106-preview",
+        model="gpt-5-nano-2025-08-07",
         messages=[
             {"role": "system", "content": sum_prompt},
             {"role": "user", "content": f" {chunk}"},

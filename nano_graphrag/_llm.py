@@ -40,7 +40,7 @@ async def gpt_4o_complete(
     prompt, system_prompt=None, history_messages=[], **kwargs
 ) -> str:
     return await openai_complete_if_cache(
-        "gpt-4o",
+        "gpt-5-nano-2025-08-07",
         prompt,
         system_prompt=system_prompt,
         history_messages=history_messages,
@@ -52,7 +52,7 @@ async def gpt_4o_mini_complete(
     prompt, system_prompt=None, history_messages=[], **kwargs
 ) -> str:
     return await openai_complete_if_cache(
-        "gpt-4o-mini",
+        "gpt-5-nano-2025-08-07",
         prompt,
         system_prompt=system_prompt,
         history_messages=history_messages,
@@ -60,13 +60,13 @@ async def gpt_4o_mini_complete(
     )
 
 
-@wrap_embedding_func_with_attrs(embedding_dim=1536, max_token_size=8192)
+@wrap_embedding_func_with_attrs(embedding_dim=3072, max_token_size=8192)
 async def openai_embedding(texts: list[str]) -> np.ndarray:
     openai_async_client = AsyncOpenAI(
         api_key=os.getenv("OPENAI_API_KEY"),
         base_url=os.getenv("OPENAI_API_BASE_URL")
     )
     response = await openai_async_client.embeddings.create(
-        model="text-embedding-3-small", input=texts, encoding_format="float"
+        model="text-embedding-3-large", input=texts, encoding_format="float"
     )
     return np.array([dp.embedding for dp in response.data])

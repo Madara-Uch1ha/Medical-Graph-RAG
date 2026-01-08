@@ -1,10 +1,9 @@
 from langchain_core.prompts import ChatPromptTemplate
 import uuid
-from langchain.chat_models import ChatOpenAI
+from langchain_openai import ChatOpenAI
 import os
 from typing import Optional
-from langchain_core.pydantic_v1 import BaseModel
-from langchain.chains import create_extraction_chain_pydantic
+from pydantic import BaseModel
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -24,7 +23,7 @@ class AgenticChunker:
         if openai_api_key is None:
             raise ValueError("API key is not provided and not found in environment variables")
 
-        self.llm = ChatOpenAI(model='gpt-4-1106-preview', openai_api_key=openai_api_key, temperature=0)
+        self.llm = ChatOpenAI(model='gpt-5-nano-2025-08-07', openai_api_key=openai_api_key, temperature=0)
 
     def add_propositions(self, propositions):
         for proposition in propositions:
@@ -289,13 +288,16 @@ class AgenticChunker:
         # Pydantic data class
         class ChunkID(BaseModel):
             """Extracting the chunk id"""
-            chunk_id: Optional[str]
+            chunk_id: Optional[str] = None
             
-        # Extraction to catch-all LLM responses. This is a bandaid
-        extraction_chain = create_extraction_chain_pydantic(pydantic_schema=ChunkID, llm=self.llm)
-        extraction_found = extraction_chain.run(chunk_found)
-        if extraction_found:
-            chunk_found = extraction_found[0].chunk_id
+        # Use structured output instead of deprecated extraction chain
+        try:
+            llm_structured = self.llm.with_structured_output(ChunkID)
+            result = llm_structured.invoke(f"Extract the chunk ID from this text: {chunk_found}")
+            if result and result.chunk_id:
+                chunk_found = result.chunk_id
+        except Exception:
+            pass  # If extraction fails, use the raw response
 
         # If you got a response that isn't the chunk id limit, chances are it's a bad response or it found nothing
         # So return nothing

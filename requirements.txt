@@ -1,0 +1,64 @@
+# Medical-Graph-RAG Requirements
+# Compatible with Python 3.13+ and Windows
+
+# Core LLM & AI
+openai
+anthropic
+tiktoken
+sentence-transformers
+transformers
+huggingface-hub
+
+# Graph Database
+neo4j
+
+# Vector Stores
+chromadb
+qdrant-client
+faiss-cpu
+
+# LangChain
+langchain
+langchain-community
+langchain-core
+
+# CAMEL Framework
+camel-ai
+
+# Data Processing
+pandas
+numpy
+scipy
+scikit-learn
+networkx
+
+# Document Processing
+unstructured
+pdfplumber
+python-docx
+openpyxl
+beautifulsoup4
+lxml
+
+# Web & API
+requests
+aiohttp
+httpx
+fastapi
+uvicorn
+
+# Utilities
+python-dotenv
+pydantic
+tqdm
+rich
+colorama
+loguru
+
+# PyTorch (CPU version for Windows compatibility)
+torch
+torchvision
+
+# Image Processing
+pillow
+opencv-python
